@@ -28,24 +28,25 @@ def nr_neterm(x):
 def generare(l,x):
     for cuv in l:
         aux = x.replace('*', cuv)
-        if 0<nr_neterm(aux) <=n*2 and nr_term(aux) <= n :
+        if nr_term(aux) <= n :
             #print(aux)
-            for i in aux:
-                if i in neterm:
-                    ntm = i
-                    aux = aux.replace(i, '*',1)
-                    #print(aux)
-                    break
-            generare(dict[ntm],aux)
-        elif nr_neterm(aux)==0:
-            if len(aux) > 1:
-                aux = aux.replace('#','')
-            cuvinte.add(aux)
+            if nr_neterm(aux):
+                for i in aux:
+                    if i in neterm:
+                        ntm = i
+                        aux = aux.replace(i, '*',1)
+                        #print(aux)
+                        break
+                generare(dict[ntm],aux)
+            else:
+                if len(aux) > 1:
+                    aux = aux.replace('#','')
+                cuvinte.add(aux)
 
 cuvinte = set()
 try:
     generare(dict[start],'*')
-    if n <= 0:
+    if n == 0:
         print("Dimensiune invalida")
     else:
         for cuv in sorted(cuvinte):
